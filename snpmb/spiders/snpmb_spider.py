@@ -1,4 +1,5 @@
 import scrapy
+from ..items import KabKotaItem
 
 class SnpmbSpider(scrapy.Spider):
     name = "snpmb"
@@ -19,7 +20,12 @@ class SnpmbSpider(scrapy.Spider):
 
             counter = counter + 1
             if (counter == 3):
+                yield KabKotaItem(
+                    master_kab = data['Master_Kab'],
+                    kode_kab = data['Kode_Kab'],
+                    nama_kab = data['Nama_Kab']
+                )
+
                 #reset counter and data
-                print ('%s,%s,%s' % (data['Master_Kab'], data['Kode_Kab'], data['Nama_Kab']))
                 data = {}
                 counter = 0

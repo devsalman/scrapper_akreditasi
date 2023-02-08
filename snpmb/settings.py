@@ -12,6 +12,13 @@ BOT_NAME = 'snpmb'
 SPIDER_MODULES = ['snpmb.spiders']
 NEWSPIDER_MODULE = 'snpmb.spiders'
 
+FEEDS = {
+    'items.csv': {
+        'format': 'csv',
+        'encoding': 'utf8',
+        'store_empty': False
+    }
+}
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'snpmb (+http://www.yourdomain.com)'

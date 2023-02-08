@@ -6,7 +6,7 @@
 import scrapy
 
 
-class SnpmbItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class KabKotaItem(scrapy.Item):
+    kode_kab = scrapy.Field()
+    nama_kab = scrapy.Field()
+    master_kab = scrapy.Field()

@@ -36,7 +36,7 @@ class SchoolDetailSpider(scrapy.Spider):
                 province_name_s = kabkota['province_name'],
                 city_code_i = kabkota['city_code'],
                 city_name_s = kabkota['city_name'],
-                school_t = data['nama sekolah'],
+                school_t = data['nama sekolah'].upper(),
                 akreditasi_s = data['akreditasi'],
                 tahun_akreditasi_i = int(datetime.datetime.strptime(data['tanggal kadaluarsa'], '%Y-%m-%d %H:%M:%S').strftime('%Y')) - 5 if (len(data['tanggal kadaluarsa']) > 0) else 0
             )

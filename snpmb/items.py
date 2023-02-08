@@ -10,3 +10,5 @@ class KabKotaItem(scrapy.Item):
     kode_kab = scrapy.Field()
     nama_kab = scrapy.Field()
     master_kab = scrapy.Field()
+
+# TODO: Create item for school detail data

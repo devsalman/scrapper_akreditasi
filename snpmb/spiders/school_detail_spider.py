@@ -7,30 +7,25 @@ class SchoolDetailSpider(scrapy.Spider):
     name = 'school_detail'
 
     def start_requests(self):
-        list_kabkota = []
         filepath = 'C:\\Users\\devsa\\Downloads\\kab_kota.csv'
         with open(filepath, newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter=',')
             next(reader) #skip header row
             for row in reader:
                 kabkota = {
-                    'city_code': row[0],
-                    'city_name': row[3],
+                    'city_code': row[3],
+                    'city_name': row[4],
                     'province_name': row[2],
-                    'province_code': row[5],
-                    'snpmb_kabkota_code': row[6] if (len(row[6]) >= 6) else ('0' + row[6])
+                    'province_code': row[1],
+                    'snpmb_kabkota_code': row[5] if (len(row[5]) >= 5) else ('0' + row[5])
                 }
 
-                list_kabkota.append(kabkota)
+        url = 'https://asia-southeast2-pdss-snmptn-299114.cloudfunctions.net/g_func_kuota_kabko?kabko=' + kabkota['snpmb_kabkota_code']
 
-        data = {'city_code': '1112', 'city_name': 'KABUPATEN ACEH BARAT DAYA', 'province_name': 'ACEH', 'province_code': '11', 'snpmb_kabkota_code': '061700'}
-        url = 'https://asia-southeast2-pdss-snmptn-299114.cloudfunctions.net/g_func_kuota_kabko?kabko=' + data['snpmb_kabkota_code']
-
-        yield scrapy.Request(url, callback=self.parse, cb_kwargs={'kabkota':data})
+        yield scrapy.Request(url, callback=self.parse, cb_kwargs={'kabkota':kabkota})
 
     def parse(self, response, kabkota):
         json_data = json.loads(response.text)
-        list_of_school_detail = []
         self.log(response.text)
 
         for index,data in json_data.items():

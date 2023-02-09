@@ -2,12 +2,14 @@ import scrapy
 import csv
 import json
 import datetime
+import logging
 from ..items import SchoolDetailItem
 
 class SchoolDetailSpider(scrapy.Spider):
     name = 'school_detail'
 
     def start_requests(self):
+        logging.getLogger('scrapy').setLevel(logging.ERROR)
         filepath = 'C:\\Users\\devsa\\Downloads\\district_final.csv'
         with open(filepath, newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter=',')
@@ -29,7 +31,7 @@ class SchoolDetailSpider(scrapy.Spider):
 
         for index,data in json_data.items():
             yield SchoolDetailItem (
-                id = int(data['npsn']),
+                id = int(data['npsn'].replace('NP', '00')),
                 npsn_s = data['npsn'],
                 jenjang_s = 'SMA',
                 province_code_i = kabkota['province_code'],
